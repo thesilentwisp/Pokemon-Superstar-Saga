@@ -1,0 +1,22 @@
+# Unity
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild*/
+[Ll]ogs/
+[Uu]serSettings/
+[Mm]emoryCaptures/
+Packages/*-lock.json
+
+# IDE/project files
+*.csproj
+*.sln
+*.user
+*.pidb
+*.suo
+*.svd
+*.pdb
+*.mdb
+
+# macOS
+.DS_Store
