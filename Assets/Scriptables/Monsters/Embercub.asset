@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8c44b5e57a91400da9a233d296afa49, type: 3}
+  m_Name: Embercub
+  m_EditorClassIdentifier: 
+  monsterId: embercub
+  displayName: Embercub
+  ATK: 9
+  DEF: 600
+  SPD: 7
+  LUK: 3
+  maxHP: 100
+  startMana: 100
+  moves:
+  - {fileID: 11400000, guid: 65a4a570f0dd346d2b8e5e537dba68b1, type: 2}
+  - {fileID: 11400000, guid: 1413c60a9d5e140b386ec8f7118a207c, type: 2}
+  - {fileID: 11400000, guid: 71326a1611ab543c88d88f688408c8b0, type: 2}
