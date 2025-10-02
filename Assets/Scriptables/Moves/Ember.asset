@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveID: ember
   moveName: Ember
-  manaCost: 1
+  manaCost: 0
   power: 6
   steps:
   - kind: 0

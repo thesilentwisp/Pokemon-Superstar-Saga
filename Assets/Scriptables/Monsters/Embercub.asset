@@ -15,11 +15,11 @@ MonoBehaviour:
   monsterId: embercub
   displayName: Embercub
   ATK: 9
-  DEF: 600
+  DEF: 6
   SPD: 7
   LUK: 3
   maxHP: 100
-  startMana: 100
+  startMana: 1
   moves:
   - {fileID: 11400000, guid: 65a4a570f0dd346d2b8e5e537dba68b1, type: 2}
   - {fileID: 11400000, guid: 1413c60a9d5e140b386ec8f7118a207c, type: 2}
