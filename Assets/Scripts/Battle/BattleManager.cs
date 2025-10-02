@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 using System;
 using Unity.VisualScripting;
 using UnityEngine.AI;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class BattleManager : MonoBehaviour
 {
@@ -36,6 +39,11 @@ public class BattleManager : MonoBehaviour
     bool playerFlowActiveThisTurn = false;
 
     MoveSO playerChosen, enemyChosen;
+
+    void Awake()
+    {
+        ApplyConfiguredSprites();
+    }
 
     void Start()
     {
@@ -379,10 +387,29 @@ public class BattleManager : MonoBehaviour
         Debug.Log(s);
     }
 
+
+    void ApplyConfiguredSprites()
+    {
+        ApplyBattleSprite(playerSpriteImage, playerMonsterSO ? playerMonsterSO.battleSprite : null);
+        ApplyBattleSprite(enemySpriteImage, enemyMonsterSO ? enemyMonsterSO.battleSprite : null);
+    }
+
     void ApplyBattleSprite(Image target, Sprite sprite)
     {
         if (!target) return;
         target.sprite = sprite;
-        target.enabled = sprite != null;
+        target.overrideSprite = sprite;
+        bool hasSprite = sprite != null;
+        target.enabled = hasSprite;
     }
+
+#if UNITY_EDITOR
+    void OnValidate()
+    {
+        if (!UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode)
+        {
+            ApplyConfiguredSprites();
+        }
+    }
+#endif
 }
