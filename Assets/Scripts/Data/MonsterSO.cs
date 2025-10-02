@@ -19,4 +19,7 @@ public class MonsterSO : ScriptableObject
     public int startMana = 1;
 
     public MoveSO[] moves = new MoveSO[3];
+
+    [Header("Visuals")]
+    public Sprite battleSprite;
 }

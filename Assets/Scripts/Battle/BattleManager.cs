@@ -16,11 +16,13 @@ public class BattleManager : MonoBehaviour
     public Slider playerHPBar;
     public Text playerHPText;
     public Text playerManaText;
+    public Image playerSpriteImage;
 
     public Text enemyNameText;
     public Slider enemyHPBar;
     public Text enemyHPText;
     public Text enemyManaText;
+    public Image enemySpriteImage;
 
     public Button move1Btn, move2Btn, move3Btn;
     public QTEController qte;
@@ -40,6 +42,9 @@ public class BattleManager : MonoBehaviour
         retryButton.gameObject.SetActive(false);
         P = new MonsterRuntime(playerMonsterSO);
         E = new MonsterRuntime(enemyMonsterSO);
+
+        ApplyBattleSprite(playerSpriteImage, P.data.battleSprite);
+        ApplyBattleSprite(enemySpriteImage, E.data.battleSprite);
 
         playerNameText.text = P.data.displayName;
         enemyNameText.text = E.data.displayName;
@@ -372,5 +377,12 @@ public class BattleManager : MonoBehaviour
     {
         if (logText) logText.text = s;
         Debug.Log(s);
+    }
+
+    void ApplyBattleSprite(Image target, Sprite sprite)
+    {
+        if (!target) return;
+        target.sprite = sprite;
+        target.enabled = sprite != null;
     }
 }
