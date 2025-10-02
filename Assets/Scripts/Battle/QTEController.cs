@@ -51,6 +51,8 @@ public class QTEController : MonoBehaviour
 
     IEnumerator TapStepRoutine(float target, float goodWin, float perfectWin, System.Action<TimingResult> cb)
     {
+        while (TapHeld())
+            yield return null;
         float t = 0f;
         if (attackCircle) { attackCircle.gameObject.SetActive(true); attackCircle.rectTransform.localScale = Vector3.one; }
         while (t < target)
@@ -71,6 +73,8 @@ public class QTEController : MonoBehaviour
 
     IEnumerator HoldReleaseRoutine(float target, float goodWin, float perfectWin, System.Action<TimingResult> cb)
     {
+        while (TapHeld())
+            yield return null;
         float held = 0f;
         bool holding = false;
         if (attackCircle) { attackCircle.gameObject.SetActive(true); attackCircle.rectTransform.localScale = Vector3.one; }
@@ -125,6 +129,17 @@ public class QTEController : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0)) return true;
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended) return true;
+        return false;
+    }
+
+    bool TapHeld()
+    {
+        if (Input.GetMouseButton(0)) return true;
+        if (Input.touchCount > 0)
+        {
+            var phase = Input.GetTouch(0).phase;
+            if (phase == TouchPhase.Began || phase == TouchPhase.Moved || phase == TouchPhase.Stationary) return true;
+        }
         return false;
     }
 }
