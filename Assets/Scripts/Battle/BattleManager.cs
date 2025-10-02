@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 using System;
 using Unity.VisualScripting;
 using UnityEngine.AI;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class BattleManager : MonoBehaviour
 {
@@ -16,11 +19,13 @@ public class BattleManager : MonoBehaviour
     public Slider playerHPBar;
     public Text playerHPText;
     public Text playerManaText;
+    public Image playerSpriteImage;
 
     public Text enemyNameText;
     public Slider enemyHPBar;
     public Text enemyHPText;
     public Text enemyManaText;
+    public Image enemySpriteImage;
 
     public Button move1Btn, move2Btn, move3Btn;
     public QTEController qte;
@@ -35,11 +40,19 @@ public class BattleManager : MonoBehaviour
 
     MoveSO playerChosen, enemyChosen;
 
+    void Awake()
+    {
+        ApplyConfiguredSprites();
+    }
+
     void Start()
     {
         retryButton.gameObject.SetActive(false);
         P = new MonsterRuntime(playerMonsterSO);
         E = new MonsterRuntime(enemyMonsterSO);
+
+        ApplyBattleSprite(playerSpriteImage, P.data.battleSprite);
+        ApplyBattleSprite(enemySpriteImage, E.data.battleSprite);
 
         playerNameText.text = P.data.displayName;
         enemyNameText.text = E.data.displayName;
@@ -373,4 +386,29 @@ public class BattleManager : MonoBehaviour
         if (logText) logText.text = s;
         Debug.Log(s);
     }
+
+    void ApplyConfiguredSprites()
+    {
+        ApplyBattleSprite(playerSpriteImage, playerMonsterSO ? playerMonsterSO.battleSprite : null);
+        ApplyBattleSprite(enemySpriteImage, enemyMonsterSO ? enemyMonsterSO.battleSprite : null);
+    }
+
+    void ApplyBattleSprite(Image target, Sprite sprite)
+    {
+        if (!target) return;
+        target.sprite = sprite;
+        target.overrideSprite = sprite;
+        bool hasSprite = sprite != null;
+        target.enabled = hasSprite;
+    }
+
+#if UNITY_EDITOR
+    void OnValidate()
+    {
+        if (!UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode)
+        {
+            ApplyConfiguredSprites();
+        }
+    }
+#endif
 }
