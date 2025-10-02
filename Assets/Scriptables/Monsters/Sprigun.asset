@@ -25,3 +25,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 815d6d8b1ce0e49f0a734a9e7de955cd, type: 2}
   - {fileID: 11400000, guid: 6e93ac1934d2a4d6da94172dad62f5f0, type: 2}
   - {fileID: 11400000, guid: b61f6c66728c641a7a87c19086f8151e, type: 2}
+  battleSprite: {fileID: 4280562027879099148, guid: b80dae9e3050b42b3999ca9ee3cd5d46, type: 3}

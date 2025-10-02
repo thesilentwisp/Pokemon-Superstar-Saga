@@ -387,6 +387,7 @@ public class BattleManager : MonoBehaviour
         Debug.Log(s);
     }
 
+
     void ApplyConfiguredSprites()
     {
         ApplyBattleSprite(playerSpriteImage, playerMonsterSO ? playerMonsterSO.battleSprite : null);
