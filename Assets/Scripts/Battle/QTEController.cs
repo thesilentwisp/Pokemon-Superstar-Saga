@@ -117,6 +117,17 @@ public class QTEController : MonoBehaviour
                 attackCircle.rectTransform.localScale = new Vector3(scale, scale, 1f);
             }
             if (TapDownThisFrame())
+            {
+                float delta = t - target;
+                float dt = Mathf.Abs(delta);
+                TimingResult timing = dt <= perfectWin ? TimingResult.Perfect : dt <= goodWin ? TimingResult.Good : TimingResult.Miss;
+                Debug.Log($"Defense input {delta:+0.000;-0.000;0.000}s from perfect ({delta * 1000f:+0;-0;0}ms). Result: {timing}");
+                onDefenseComplete?.Invoke(timing);
+                if (attackCircle) attackCircle.gameObject.SetActive(false);
+                running = false;
+                yield break;
+            }
+            if (TapDownThisFrame())
                 {
                     float dt = Mathf.Abs(t - target);
                     onDefenseComplete?.Invoke(dt <= perfectWin ? TimingResult.Perfect : dt <= goodWin ? TimingResult.Good : TimingResult.Miss);
@@ -128,6 +139,7 @@ public class QTEController : MonoBehaviour
         }
         running = false;
         if (attackCircle) attackCircle.gameObject.SetActive(false);
+        Debug.Log("Defense input missed: no tap detected.");
         onDefenseComplete?.Invoke(TimingResult.Miss);
     }
 
