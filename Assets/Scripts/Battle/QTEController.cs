@@ -25,7 +25,11 @@ public class QTEController : MonoBehaviour
     {
         if (running) StopAllCoroutines();
         onDefenseComplete = callback;
-        if (attackCircle) attackCircle.gameObject.SetActive(false);
+        if (attackCircle)
+        {
+            attackCircle.gameObject.SetActive(true);
+            attackCircle.rectTransform.localScale = Vector3.one;
+        }
         gameObject.SetActive(true);
         running = true;
         StartCoroutine(DefenseRoutine(targetMin, targetMax, goodWindow, perfectWindow));
@@ -101,20 +105,29 @@ public class QTEController : MonoBehaviour
     IEnumerator DefenseRoutine(float targetMin, float targetMax, float goodWin, float perfectWin)
     {
         float target = Random.Range(targetMin, targetMax);
+        float timeout = target + 0.6f;
         float t = 0f;
-        while (t < target + 0.6f)
+        while (t < timeout)
         {
             t += Time.deltaTime;
-            if (TapDownThisFrame())
+            if (attackCircle)
             {
-                float dt = Mathf.Abs(t - target);
-                onDefenseComplete?.Invoke(dt <= perfectWin ? TimingResult.Perfect : dt <= goodWin ? TimingResult.Good : TimingResult.Miss);
-                running = false;
-                yield break;
+                float norm = target > Mathf.Epsilon ? Mathf.Clamp01(t / target) : 1f;
+                float scale = Mathf.Clamp01(1f - norm);
+                attackCircle.rectTransform.localScale = new Vector3(scale, scale, 1f);
             }
+            if (TapDownThisFrame())
+                {
+                    float dt = Mathf.Abs(t - target);
+                    onDefenseComplete?.Invoke(dt <= perfectWin ? TimingResult.Perfect : dt <= goodWin ? TimingResult.Good : TimingResult.Miss);
+                    if (attackCircle) attackCircle.gameObject.SetActive(false);
+                    running = false;
+                    yield break;
+                }
             yield return null;
         }
         running = false;
+        if (attackCircle) attackCircle.gameObject.SetActive(false);
         onDefenseComplete?.Invoke(TimingResult.Miss);
     }
 
